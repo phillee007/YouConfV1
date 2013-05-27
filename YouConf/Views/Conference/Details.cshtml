@@ -1,0 +1,100 @@
+﻿@model YouConf.Data.Entities.Conference
+@{
+    ViewBag.Title = Model.Name;
+}
+<article>
+    <header style="background-color: #DCE9BE; padding: 1em">
+        @section H1{}
+        <h1 style="margin: 0">@Model.Name</h1>
+        @Html.Partial("ConferenceWhenAndWhere", Model)
+        <p><strong>@Model.Abstract</strong></p>
+        <p>
+            @if (!String.IsNullOrWhiteSpace(Model.HangoutId))
+            {
+                <strong>@Html.ActionLink("View live stream", "Live", new { hashTag = Model.HashTag }, new { @class = "blue-button" })</strong>
+@*<p><strong><a id="LiveStream" href="#">View live stream</a> </strong></p>*@
+            }
+            @Html.ActionLink("Edit", "Edit")
+            @Html.ActionLink("Delete", "Delete")
+        </p>
+    </header>
+    <p>@Model.Description</p>
+
+    <h2>Speakers</h2>
+    <section class="box">
+        @for (int i = 0; i < Model.Speakers.Count; i++)
+        {
+            var speaker = Model.Speakers[i];
+
+            <article class="speaker-box">
+                <header>
+                    <h3 style="line-height: 60px;">@if (!String.IsNullOrWhiteSpace(speaker.AvatarUrl))
+                                                   {
+                        <img src="@speaker.AvatarUrl" title="@speaker.Name Avatar image" />
+                                                   }
+                        @speaker.Name
+                    </h3>
+                </header>
+                <p>@speaker.Bio <a href="@speaker.Url" title="@speaker.Name" class="no-button">Website</a></p>
+                <footer>
+                    <p style="font-size: 0.7em">@Html.ActionLink("Edit", "Edit", "Speaker", new { id = speaker.Id, conferenceHashTag = Model.HashTag }, null) |
+        @Html.ActionLink("Remove", "Delete", "Speaker", new { id = speaker.Id, conferenceHashTag = Model.HashTag }, null)
+                    </p>
+                </footer>
+            </article>
+        }
+        <p style="padding-left:1em">@Html.ActionLink("Add a speaker", "Add", "Speaker", new { id = Model.HashTag }, null)</p>
+    </section>
+
+    <h2>Presentations</h2>
+    <section class="box">
+        @foreach (var presentation in Model.Presentations.OrderBy(x => x.StartTime))
+        {
+            var conferenceTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Model.TimeZoneId);
+            var presentationLocalStartTime = presentation.StartTime.UtcToLocal(conferenceTimeZone);
+            var presentationUtcEndDate = presentation.StartTime.Add(TimeSpan.FromMinutes(@presentation.Duration));
+            var presentationLocalEndDate = presentationUtcEndDate.UtcToLocal(conferenceTimeZone);
+            var speakerNames = String.Join(", ", presentation.Speakers.Select(x => x.Name).ToArray());
+            <article class="speaker-box">
+                <header>
+                    <h3 style="padding:0.2em;">@presentation.Name</h3>
+                </header>
+                <span class="event-time"><strong>When: </strong>@presentationLocalStartTime - @presentationLocalEndDate @Model.TimeZoneId (@presentation.StartTime - @presentationUtcEndDate) UTC) </span><br />
+                <span class="event-time"><strong>Speakers: </strong>@speakerNames</span>
+                <p>@presentation.Abstract</p>
+                <footer>
+                    <p style="font-size: 0.7em">@Html.ActionLink("Edit", "Edit", "Presentation", new { id = presentation.Id, conferenceHashTag = Model.HashTag }, null) |
+    @Html.ActionLink("Remove", "Delete", "Presentation", new { id = presentation.Id, conferenceHashTag = Model.HashTag }, null)
+                        @if (!String.IsNullOrWhiteSpace(presentation.YouTubeVideoId))
+                        {
+@*@:| <a href="//www.youtube.com/watch?v=@presentation.YouTubeVideoId" title="View on YouTube" target="_blank" class="blue-button">View on YouTube</a>*@
+                            @Html.ActionLink("View", "Live", null, new { hashTag = Model.HashTag, @class = "blue-button" })
+                        }
+                    </p>
+                </footer>
+            </article>
+        }
+        <p style="padding-left:1em">@Html.ActionLink("Add a presentation", "Add", "Presentation", new { id = Model.HashTag }, null)</p>
+    </section>
+
+    @*<div style="margin-top: 1em;">
+        @Html.ActionLink("Edit Conference", "Edit") |
+    @Html.ActionLink("Delete Conference", "Delete")
+    </div>*@
+</article>
+@section scripts{
+    <script>
+        $(function () {
+            //Looked at incorporating live stream on this page, but currently have it on a separate page as otherwise this will become too cluttered
+            @*$("#LiveStream").click(function () {
+                $("<div><iframe width=\"420\" height=\"315\" src=\"@Model.HangoutUrl\" frameborder=\"0\" allowfullscreen></iframe></div>")
+            .insertAfter($(this));*@
+
+            $("#tabs-nobg").tabs();
+        });
+    </script>
+}
+
+
+
+@section Sidebar{}

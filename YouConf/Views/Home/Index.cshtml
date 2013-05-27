@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Your conference online";
+    ViewBag.IsHomepage = true;
+}
+@section MainContent {
+    <section class="content-wrapper hero-wrapper clear-fix">
+        <div id="hero" class="hero box">
+            <div class="grid">
+                <div class="col-7-10">
+                    <div class="teaser">Prepare. Present. Engage.</div>
+                    <h1>YouConf - your conference online</h1>
+                </div>
+                <div class="col-3-10">
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Help")" class = "button"><span class="arrow">Get started</span></a></li>
+                        <li><a href="@Url.Action("All", "Conference")" class = "button"><span class="info">More info</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content-wrapper clear-fix">
+        <div class="grid landing-panels">
+            <div class="col-1-3">
+                <div class="box">
+                    <img src="/images/conferencescreenshot.png" />
+                    <div style="padding-top: 0.5em">
+                        <h2>Prepare</h2>
+                        <p>Setup your conference, and invite people to visit your conference page with a recognizable url. We make it easy to manage presentations, speaker, and conference details.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1-3" style="padding: 0 10px">
+                <div class="box">
+                    <img src="/images/vsscreenshot.png" />
+                    <div style="padding-top: 0.5em">
+                        <h2>Present</h2>
+                        <p>Broadcast live using Google Hangouts. With YouConf you can embed your live video feeds for both conferences and individual presentations, providing an integrated viewing experience.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1-3" style="padding-left: 20px">
+                <div class="box">
+                    <img src="/images/twitterscreenshot.png" />
+                    <div style="padding-top: 0.5em">
+                        <h2>Engage</h2>
+                        <p>Engage and interact with your audience using Twitter live chat feeds alongside your video. Viewers can comment on your presentation in realtime!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-wrapper hero-wrapper clear-fix">
+        <div class="hero box" style="padding-bottom:5%">
+           <h2><a href="@Url.Action("Index", "Help")" class = "button"><span class="arrow">Get started today</span></a></h2>
+        </div>
+    </section>
+}
+
+

@@ -1,0 +1,106 @@
+﻿@model YouConf.Data.Entities.Conference
+@{
+    ViewBag.Title = "Edit conference";
+}
+
+<p>Please enter details for your conference below.</p>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    if (Model != null)
+    {
+    @Html.Hidden("Id", Model.HashTag)
+    }
+    
+    <fieldset>
+        <legend>Conference</legend>
+
+        <div class="editor-label">
+            @Html.LabelWithRequiredAsteriskFor(model => model.HashTag)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.HashTag, new { title = "This should be a unique hashtag that identifies your conference. It will be used in the friendly url for the conference (e.g. http://youconf.azurewebsites.net/hashtag). If you change it, make sure to update any external links to your conference page." })
+            @Html.ValidationMessageFor(model => model.HashTag)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelWithRequiredAsteriskFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Name, new { title = "The name of your conference" })
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelWithRequiredAsteriskFor(model => model.Abstract)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Abstract, new { title = "The short description for your conference. This will be shown on the conference listing page." })
+            @Html.ValidationMessageFor(model => model.Abstract)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelWithRequiredAsteriskFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Description, new { Title = "The full description of your conference. This will be shown on the conference detail page." })
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelWithRequiredAsteriskFor(model => model.StartDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.StartDate, "LocalDateTime", new { TimeZoneId = Model.TimeZoneId, Tooltip = "This should be specified in local time for your chosen conference timezone." })
+            @Html.ValidationMessageFor(model => model.StartDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelWithRequiredAsteriskFor(model => model.EndDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EndDate, "LocalDateTime", new { TimeZoneId = Model.TimeZoneId, Tooltip = "This should be specified in local time for your chosen conference timezone." })
+            @Html.ValidationMessageFor(model => model.EndDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelWithRequiredAsteriskFor(model => model.TimeZoneId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TimeZoneId, new { Tooltip = "The local timezone for your chosen conference" })
+            @Html.ValidationMessageFor(model => model.TimeZoneId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelWithRequiredAsteriskFor(model => model.HangoutId)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.HangoutId, new { title = "The unique hangout id from Google Hangouts. Only available once you've setup your hangout." })
+            @Html.ValidationMessageFor(model => model.HangoutId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelWithRequiredAsteriskFor(model => model.TwitterWidgetId)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.TwitterWidgetId, new { title = "The ID of your Twitter widget (only fill this in if you'd like to enable chat). See <a href=\"https://dev.twitter.com/docs/embedded-timelines\" title=\"How to create a Twitter Widget\">https://dev.twitter.com/docs/embedded-timelines</a> to create a widget and enable chat." })
+            @Html.ValidationMessageFor(model => model.TwitterWidgetId)
+        </div>
+
+       @* <div class="editor-label">
+            @Html.LabelWithRequiredAsteriskFor(model => model.AvailableToPublic)
+        </div>
+        <div class="editor-field">
+            @Html.CheckBoxFor(model => model.AvailableToPublic, new { title = "Check this to allow your conference to be displayed on the conference listings page" })
+            @Html.ValidationMessageFor(model => model.AvailableToPublic)
+        </div>*@
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+@section Sidebar{}

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<YouConf.Data.Entities.Conference>
+
+@{
+    ViewBag.Title = "All conferences";
+}
+<p style="font-size: 1.5em">
+    @Html.ActionLink("Add your conference", "Create")
+</p>
+
+<div class="box striped">
+    @foreach (var item in Model)
+    {
+        <article>
+            <header>
+                <h2>@item.Name</h2>
+            </header>
+            @Html.Partial("ConferenceWhenAndWhere", item)
+            <p>@Html.Truncate(item.Abstract, 300) </p>
+            <div style="font-size: 0.8em;">
+                @Html.ActionLink("More", "Details", new { hashTag = item.HashTag })
+            </div>
+        </article>
+    }
+</div>
+@*<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HashTag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Abstract)
+        </th>
+        <th></th>
+    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HashTag)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.Truncate(item.Abstract, 250)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { hashTag = item.HashTag }) |
+                @Html.ActionLink("Details", "Details", new { hashTag = item.HashTag }) |
+                @Html.ActionLink("Delete", "Delete", new { hashTag = item.HashTag })
+            </td>
+        </tr>
+    }
+
+</table>*@
+
+
+
+@section Sidebar{}

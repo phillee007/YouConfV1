@@ -1,0 +1,17 @@
+﻿@model YouConf.Data.Entities.Conference
+@{
+    ViewBag.Title = "Delete conference";
+}
+
+<h2>@Model.Name</h2>
+<h3>Are you sure you want to remove this conference?</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" />
+        |
+        @Html.ActionLink("Cancel", "Details", new { hashTag = Model.HashTag })
+    </p>
+}
